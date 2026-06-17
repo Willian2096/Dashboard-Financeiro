@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Gerar Ícones PWA</title></head>
+<body style="background:#0B0B0B;color:white;font-family:sans-serif;padding:20px">
+<h2>Gerar Ícones PWA</h2>
+<canvas id="c192" width="192" height="192" style="display:none"></canvas>
+<canvas id="c512" width="512" height="512" style="display:none"></canvas>
+<p>Clique nos links abaixo para baixar os ícones e salve-os como <code>icon-192.png</code> e <code>icon-512.png</code> nesta pasta:</p>
+<a id="dl192" download="icon-192.png" style="color:#F4C542;display:block;margin:10px 0">Download icon-192.png</a>
+<a id="dl512" download="icon-512.png" style="color:#F4C542;display:block;margin:10px 0">Download icon-512.png</a>
+<script>
+function drawIcon(canvas) {
+  const s = canvas.width;
+  const ctx = canvas.getContext('2d');
+  const r = s * 0.18;
+  // Background
+  ctx.fillStyle = '#0B0B0B';
+  ctx.beginPath();
+  ctx.roundRect(0, 0, s, s, r);
+  ctx.fill();
+  // Border
+  ctx.strokeStyle = 'rgba(244,197,66,0.3)';
+  ctx.lineWidth = s * 0.02;
+  ctx.beginPath();
+  ctx.roundRect(s*0.01, s*0.01, s*0.98, s*0.98, r);
+  ctx.stroke();
+  // Emoji 💼 or coin symbol
+  ctx.font = `${s * 0.5}px serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('💰', s/2, s/2 + s*0.02);
+}
+const c1 = document.getElementById('c192');
+const c2 = document.getElementById('c512');
+drawIcon(c1);
+drawIcon(c2);
+document.getElementById('dl192').href = c1.toDataURL('image/png');
+document.getElementById('dl512').href = c2.toDataURL('image/png');
+</script>
+</body>
+</html>
