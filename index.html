@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Dashboard Financeiro Pessoal</title>
+    <!-- Detecção mobile antes do render (evita flash) -->
+    <script>
+        (function(){
+            var mobile = window.innerWidth <= 768 ||
+                /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (mobile) document.documentElement.classList.add('is-mobile');
+        })();
+    </script>
     <!-- PWA / Mobile App -->
     <meta name="theme-color" content="#0B0B0B">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -846,109 +854,95 @@
         }
         .mobile-sheet-cancel:active { opacity: 0.7; }
 
-        /* ── MOBILE RESPONSIVE OVERRIDES ───────────────────────── */
-        @media (max-width: 768px) {
-            /* Hide desktop sidebar, show mobile bottom nav */
-            .sidebar { display: none !important; }
-            .main-content { margin-left: 0 !important; }
-            .bottom-nav { display: block; }
-            .mobile-fab { display: flex; }
-            /* Hide desktop add button */
-            #addMenuBtn { display: none !important; }
+        /* ── MOBILE RESPONSIVE OVERRIDES ───────────────────────────
+           Usa html.is-mobile (classe injetada antes do render pelo JS)
+           E também @media como fallback extra.
+        ─────────────────────────────────────────────────────────── */
 
-            /* Safe-area padding for content */
-            .page-content {
-                padding: 14px;
-                padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px));
-            }
+        /* Crítico: ocultar sidebar e mostrar bottom nav IMEDIATAMENTE */
+        html.is-mobile .sidebar,
+        html.is-mobile #sidebar  { display: none !important; }
+        html.is-mobile .main-content,
+        html.is-mobile #mainContent { margin-left: 0 !important; }
+        html.is-mobile .bottom-nav  { display: block !important; }
+        html.is-mobile .mobile-fab  { display: flex !important; }
+        html.is-mobile #addMenuBtn  { display: none !important; }
 
-            /* Topbar */
-            .topbar {
-                padding: 10px 14px;
-                padding-top: max(10px, env(safe-area-inset-top, 10px));
-                gap: 10px;
-            }
-            .topbar-title { font-size: 14px; min-width: unset; }
-            .month-label { font-size: 12px; min-width: unset; }
-            .month-nav { gap: 6px; }
-            .nav-btn { width: 28px; height: 28px; }
+        /* Restante do layout mobile */
+        html.is-mobile .page-content {
+            padding: 14px;
+            padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px));
+        }
+        html.is-mobile .topbar {
+            padding: 10px 14px;
+            padding-top: max(10px, env(safe-area-inset-top, 10px));
+            gap: 10px;
+        }
+        html.is-mobile .topbar-title { font-size: 14px; min-width: unset; }
+        html.is-mobile .month-label  { font-size: 12px; min-width: unset; }
+        html.is-mobile .month-nav    { gap: 6px; }
+        html.is-mobile .nav-btn      { width: 28px; height: 28px; }
 
-            /* KPIs */
-            .kpi-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
-            .kpi-value { font-size: 17px; }
+        html.is-mobile .kpi-grid    { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+        html.is-mobile .kpi-value   { font-size: 17px; }
+        html.is-mobile .charts-grid { grid-template-columns: 1fr !important; }
+        html.is-mobile .chart-container { height: 200px; }
+        html.is-mobile .bottom-grid { grid-template-columns: 1fr !important; }
 
-            /* Charts */
-            .charts-grid { grid-template-columns: 1fr !important; }
-            .chart-container { height: 200px; }
+        html.is-mobile .hero-balance-card { height: auto; padding: 20px 18px; }
+        html.is-mobile .hero-value        { font-size: 26px !important; }
+        html.is-mobile .hero-row          { gap: 16px; flex-wrap: wrap; }
 
-            /* Bottom grid */
-            .bottom-grid { grid-template-columns: 1fr !important; }
+        html.is-mobile .spend-cards-grid { grid-template-columns: 1fr 1fr !important; }
+        html.is-mobile .spend-row        { grid-template-columns: 1fr !important; }
 
-            /* Hero */
-            .hero-balance-card { height: auto; padding: 20px 18px; }
-            .hero-value { font-size: 26px !important; }
-            .hero-row { gap: 16px; flex-wrap: wrap; }
+        html.is-mobile #dashRow1 { display: flex !important; flex-direction: column !important; }
+        html.is-mobile #dashRow2 { display: flex !important; flex-direction: column !important; }
+        html.is-mobile #dashRow3 { grid-template-columns: 1fr 1fr !important; }
+        html.is-mobile #goalsGrid { grid-template-columns: 1fr 1fr !important; }
 
-            /* Spend */
-            .spend-cards-grid { grid-template-columns: 1fr 1fr !important; }
-            .spend-row { grid-template-columns: 1fr !important; }
+        html.is-mobile .tx-stats-grid { grid-template-columns: 1fr 1fr !important; }
+        html.is-mobile .tx-item  { padding: 12px 14px; }
+        html.is-mobile .tx-avatar { width: 36px; height: 36px; }
+        html.is-mobile .fixed-grid { grid-template-columns: 1fr 1fr; }
+        html.is-mobile .parcela-row { grid-template-columns: 1fr; }
+        html.is-mobile #cardsSection { grid-template-columns: 1fr !important; }
+        html.is-mobile .pcard-wrap { height: 200px; }
+        html.is-mobile .auth-container { margin: 16px; padding: 24px 18px; }
 
-            /* Dashboard inline grids → stack */
-            #dashRow1 { display: flex !important; flex-direction: column !important; }
-            #dashRow2 { display: flex !important; flex-direction: column !important; }
-            #dashRow3 { grid-template-columns: 1fr 1fr !important; }
-
-            /* Goals */
-            #goalsGrid { grid-template-columns: 1fr 1fr !important; }
-
-            /* Transactions */
-            .tx-stats-grid { grid-template-columns: 1fr 1fr !important; }
-            .tx-item { padding: 12px 14px; }
-            .tx-avatar { width: 36px; height: 36px; }
-            .tx-filters { gap: 6px; }
-
-            /* Fixed items */
-            .fixed-grid { grid-template-columns: 1fr 1fr; }
-
-            /* Modals slide up from bottom */
-            .modal {
-                display: none;
-                flex-direction: column;
-                justify-content: flex-end;
-                align-items: stretch;
-                padding: 0;
-            }
-            .modal[style*="flex"] { display: flex !important; }
-            .modal-content {
-                width: 100% !important;
-                max-width: 100% !important;
-                margin: 0 !important;
-                border-radius: 24px 24px 0 0 !important;
-                max-height: 90vh;
-                overflow-y: auto;
-                padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
-                animation: slideUp 0.3s cubic-bezier(.16,1,.3,1);
-            }
-
-            /* Auth screen */
-            .auth-container { margin: 16px; padding: 24px 18px; }
-
-            /* Parcela row */
-            .parcela-row { grid-template-columns: 1fr; }
-
-            /* Cards section */
-            #cardsSection { grid-template-columns: 1fr !important; }
-
-            /* Premium card */
-            .pcard-wrap { height: 200px; }
+        /* Modais como bottom sheet no mobile */
+        html.is-mobile .modal-content {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            border-radius: 24px 24px 0 0 !important;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
+            animation: slideUp 0.3s cubic-bezier(.16,1,.3,1);
         }
 
-        @media (max-width: 400px) {
-            .kpi-value { font-size: 15px; }
-            .hero-value { font-size: 22px !important; }
-            .topbar-title { font-size: 13px; }
-            .bottom-nav-item { min-width: 50px; padding: 6px 8px 4px; }
-            .bottom-nav-label { font-size: 9px; }
+        /* Telas muito pequenas */
+        html.is-mobile .kpi-value          { font-size: 15px; }
+        html.is-mobile .bottom-nav-label   { font-size: 9px; }
+
+        /* ── Fallback @media caso JS não rode ainda ────────────── */
+        @media (max-width: 768px) {
+            .sidebar  { display: none !important; }
+            .main-content { margin-left: 0 !important; }
+            .bottom-nav { display: block !important; }
+            .mobile-fab { display: flex !important; }
+            #addMenuBtn { display: none !important; }
+            .kpi-grid { grid-template-columns: 1fr 1fr !important; }
+            .charts-grid { grid-template-columns: 1fr !important; }
+            .bottom-grid { grid-template-columns: 1fr !important; }
+            .hero-value { font-size: 26px !important; }
+            #dashRow1 { display: flex !important; flex-direction: column !important; }
+            #dashRow2 { display: flex !important; flex-direction: column !important; }
+            .modal-content {
+                width: 100% !important; max-width: 100% !important;
+                margin: 0 !important; border-radius: 24px 24px 0 0 !important;
+            }
         }
     </style>
 </head>
@@ -5223,30 +5217,21 @@
         window.openMobileAddSheet  = openMobileAddSheet;
         window.closeMobileAddSheet = closeMobileAddSheet;
 
+        /* ── DETECÇÃO MOBILE DINÂMICA ───────────────────────────── */
+        function _checkMobile() {
+            var mobile = window.innerWidth <= 768 ||
+                /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            document.documentElement.classList.toggle('is-mobile', mobile);
+        }
+        _checkMobile();
+        window.addEventListener('resize', _checkMobile);
+
         /* ── SERVICE WORKER (PWA offline) ───────────────────────── */
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js').catch(() => {});
             });
         }
-
-        /* ── MODAL: fix display on mobile (flex) ────────────────── */
-        const _origShowModal = window.openModal;
-        document.addEventListener('click', () => {}, { passive: true });
-
-        // Ensure modals use flex when shown on mobile
-        const _observeModals = () => {
-            document.querySelectorAll('.modal').forEach(modal => {
-                const observer = new MutationObserver(() => {
-                    if (modal.style.display === 'block' && window.innerWidth <= 768) {
-                        modal.style.display = 'flex';
-                    }
-                });
-                observer.observe(modal, { attributes: true, attributeFilter: ['style'] });
-            });
-        };
-        document.addEventListener('DOMContentLoaded', _observeModals);
-        setTimeout(_observeModals, 1000);
     </script>
 </body>
 </html>
