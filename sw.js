@@ -1,7 +1,12 @@
-const CACHE = 'financeiro-v1';
+const CACHE = 'financeiro-v2';
 const ASSETS = [
   '/',
-  '/index.html'
+  '/index.html',
+  '/app.html',
+  '/app.js',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
 self.addEventListener('install', e => {
