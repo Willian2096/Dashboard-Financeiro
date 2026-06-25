@@ -4,16 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Dashboard Financeiro Pessoal</title>
-    <!-- Detecção mobile: redireciona para app.html no mobile, mantém desktop aqui -->
+    <!-- Detecção mobile antes do render (evita flash) -->
     <script>
         (function(){
             var mobile = window.innerWidth <= 768 ||
                 /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            if (mobile) {
-                window.location.replace('/app.html');
-            } else {
-                document.documentElement.classList.remove('is-mobile');
-            }
+            if (mobile) document.documentElement.classList.add('is-mobile');
         })();
     </script>
     <!-- PWA / Mobile App -->
